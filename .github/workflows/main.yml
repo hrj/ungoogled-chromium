@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Get deps
       run: |
+        apt search libharfbuzz
         sudo apt install python3 packaging-dev clang-8 equivs
     - name: Setup build
       run: |
