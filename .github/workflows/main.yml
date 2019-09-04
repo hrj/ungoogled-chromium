@@ -11,13 +11,17 @@ jobs:
     - uses: actions/checkout@v1
     - name: Get deps
       run: |
-        sudo apt install python3 packaging-dev
+        sudo apt install python3 packaging-dev clang-8
+    - name: Setup build
+      run: |
         pwd
         ls
         mkdir -p build/src
         git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-debian.git
         git checkout --recurse-submodules ${{ github.sha }}
         cp -r ungoogled-chromium-debian/debian build/src/
+    - name: Start build
+      run: |
         cd build/src
         ./debian/rules setup-debian
         sudo mk-build-deps -i debian/control
