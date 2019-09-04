@@ -18,7 +18,7 @@ jobs:
         pwd
         ls
         mkdir -p build/src
-        git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-debian.git
+        git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-debian.git -b ubuntu_bionic
         git checkout --recurse-submodules ${{ github.sha }}
         cp -r ungoogled-chromium-debian/debian build/src/
     - name: Start build
