@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get deps
+      run: |
+        sudo apt install python3 packaging-dev
+        pwd
+        ls
+        mkdir -p build/src
+        git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-debian.git
+        git checkout --recurse-submodules ${{ github.sha }}
+        cp -r ungoogled-chromium-debian/debian build/src/
+        cd build/src
+        ./debian/rules setup-debian
+        sudo mk-build-deps -i debian/control
+        rm ungoogled-chromium-build-deps_*.deb
+        ./debian/rules setup-local-src
+        dpkg-buildpackage -b -uc
