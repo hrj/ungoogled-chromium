@@ -23,6 +23,7 @@ jobs:
         git checkout --recurse-submodules ${{ github.sha }}
         cp -r ungoogled-chromium-debian/debian build/src/
     - name: Start build
+      timeout-minutes: 1440
       run: |
         echo Build started
         cd build/src
